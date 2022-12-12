@@ -1,3 +1,5 @@
+package util;
+
 public class Bounds { 
     private int lower; 
     private int upper; 
