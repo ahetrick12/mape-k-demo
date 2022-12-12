@@ -1,6 +1,6 @@
-package mapek;
+package src.mapek;
 
-import util.Bounds;
+import src.util.Bounds;
 
 public class Knowledge {
     private static Knowledge instance;
@@ -10,7 +10,7 @@ public class Knowledge {
     private int targetValue = 0;
 
     public Knowledge(Bounds bounds, int guess, int target) {
-        updateBounds(bounds.getLower(), bounds.getUpper());
+        updateBounds(bounds);
         currentGuess = guess;
         targetValue = target;
     }
@@ -22,11 +22,21 @@ public class Knowledge {
         return instance;
     }
 
-    public void updateBounds(int lower, int upper) {
-        currentBounds.setBounds(lower, upper);
+    public Bounds getBounds() { return currentBounds; }
+
+    public int getGuess() { return currentGuess; }
+
+    public int getTarget() { return targetValue; }
+
+    public void updateBounds(Bounds bounds) {
+        currentBounds.setBounds(bounds.getLower(), bounds.getUpper());
     }
 
     public void updateGuess(int guess) {
         currentGuess = guess;
+    }
+
+    public void setTarget(int target) {
+        targetValue = target;
     }
 }
