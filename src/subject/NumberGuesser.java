@@ -20,13 +20,15 @@ public class NumberGuesser implements Sensor {
 
         while (!targetFound)
         {
-            number = rand.nextInt(bounds.getUpper() - bounds.getLower()) + bounds.getLower();
-            System.out.println("Bounds: " + bounds + "\nGuess: " + number + "\n");
-            notify(number);
-
             Thread.sleep(1000);
+
+            number = rand.nextInt(bounds.getUpper() - bounds.getLower()) + bounds.getLower();
+            System.out.println("\n> GAME: Guessing a number in " + bounds + "...");
+            System.out.println("> GUESS: " + number + "\n");
+            notify(number);            
         }
 
+        System.out.println("\n==================================");
         System.out.println("Target reached at " + number + "!");
     }
 

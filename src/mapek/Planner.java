@@ -2,20 +2,21 @@ package src.mapek;
 
 import src.util.Bounds;
 
-public class Plan implements Component<Boolean> {
+public class Planner implements Component<Boolean> {
 
     private Knowledge knowledge = Knowledge.getInstance();
-    private Execute execute;
+    private Executer executer;
 
-    public Plan(Execute execute) {
-        this.execute = execute;
+    public Planner(Executer execute) {
+        this.executer = execute;
     }
 
     @Override
     public void execute(Boolean alterModel) {
         if (!alterModel) 
         {
-            execute.execute(null);
+            executer.execute(null);
+            System.out.println("\t> PLANNER: We will plan to NOT alter the system and signify the end of the game");
             return;
         }
         
@@ -29,7 +30,9 @@ public class Plan implements Component<Boolean> {
             bounds.setUpper(guess);
         }
 
-        execute.execute(bounds);
+        System.out.println("\t> PLANNER: We will plan to alter system to have new bounds of " + bounds);
+
+        executer.execute(bounds);
     } 
     
 }

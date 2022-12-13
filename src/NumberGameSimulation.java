@@ -12,16 +12,18 @@ public class NumberGameSimulation {
 
     public static void main(String[] args) throws InterruptedException {
         int target = new Random().nextInt(bounds.getUpper());
-        System.out.println("Target: " + target);
-        System.out.println("==================================\n");
-
         Knowledge.getInstance().setTarget(target);
 
+        System.out.println("\n==================================");
+        System.out.println("TARGET: " + target);
+        System.out.println("==================================");
+
+        
         NumberGuesser game = new NumberGuesser(bounds);
         
-        Execute execute = new Execute(game);
-        Plan plan = new Plan(execute);
-        Analyze analyze = new Analyze(plan);
+        Executer execute = new Executer(game);
+        Planner plan = new Planner(execute);
+        Analyzer analyze = new Analyzer(plan);
         Monitor monitor = new Monitor(analyze);
         game.register(monitor);
 

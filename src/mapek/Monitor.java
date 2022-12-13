@@ -2,10 +2,10 @@ package src.mapek;
 
 public class Monitor implements Listener, Component<Integer> {
 
-    private Analyze analyze;
+    private Analyzer analyzer;
 
-    public Monitor(Analyze analyze) {
-        this.analyze = analyze;
+    public Monitor(Analyzer analyze) {
+        this.analyzer = analyze;
     }
 
     @Override
@@ -15,7 +15,9 @@ public class Monitor implements Listener, Component<Integer> {
 
     @Override
     public void execute(Integer guess) {
+        System.out.println("\t> MONITOR: Recieved guess of " + guess);
+
         Knowledge.getInstance().updateGuess(guess);
-        analyze.execute(guess);
+        analyzer.execute(guess);
     }
 }
