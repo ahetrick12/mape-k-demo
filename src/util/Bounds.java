@@ -1,5 +1,8 @@
 package src.util;
 
+/*
+ * Represents a lower and upper integer bound
+ */
 public class Bounds { 
     private int lower; 
     private int upper; 

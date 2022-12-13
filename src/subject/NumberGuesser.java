@@ -4,11 +4,16 @@ import java.util.*;
 import src.mapek.Listener;
 import src.util.*;
 
+/*
+ * A number guesser that tries to guess a number in a given range
+ */
 public class NumberGuesser implements Sensor {
 
     private List<Listener> listeningComponents = new ArrayList<Listener>();
     private Bounds bounds;
     private boolean targetFound = false;
+
+    private Logger logger = Logger.getInstance();
 
     public NumberGuesser(Bounds bounds) {
         this.bounds = bounds;
@@ -16,20 +21,31 @@ public class NumberGuesser implements Sensor {
 
     public void run() throws InterruptedException {
         Random rand = new Random();
-        int number = 0;
+        int guess = 0;
 
         while (!targetFound)
         {
-            Thread.sleep(1000);
+            // Wait for a bit
+            Thread.sleep(1500);
 
-            number = rand.nextInt(bounds.getUpper() - bounds.getLower()) + bounds.getLower();
-            System.out.println("\n> GAME: Guessing a number in " + bounds + "...");
-            System.out.println("> GUESS: " + number + "\n");
-            notify(number);            
+            // Guess the number and notify listeners
+            int range = bounds.getUpper() - bounds.getLower();
+
+            if (range > 0)
+                guess = rand.nextInt(range) + bounds.getLower();
+            else
+                guess = bounds.getLower();
+
+            logger.print("\nGAME: Guessing a number in " + bounds + "...");
+            logger.print("GUESS: " + guess + "\n");
+
+            notify(guess);            
         }
 
-        System.out.println("\n==================================");
-        System.out.println("Target reached at " + number + "!");
+        // Target found
+        logger.print("\n==================================");
+        logger.print("Target reached at " + guess + "!");
+        logger.print("==================================\n");
     }
 
     public void setBounds(Bounds bounds) { this.bounds = bounds; }
@@ -47,9 +63,16 @@ public class NumberGuesser implements Sensor {
     }
 
     @Override
-    public void notify(int num) {
-        for (Listener component: listeningComponents) {
-            component.update(num);
+    public void notify(int num)  {
+        try {
+            // Wait a bit for MAPE-K loop to run/display, just for visual purposes
+            Thread.sleep(500);
+
+            for (Listener component: listeningComponents) {
+                component.update(num);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
