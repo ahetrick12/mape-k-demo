@@ -21,4 +21,10 @@ public class Bounds {
     public int getLower() { return lower; }
 
     public int getUpper() { return upper; }
+
+    @Override
+    public String toString()
+    {
+        return String.format("[%d, %d]", lower, upper);
+    }
   }

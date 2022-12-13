@@ -7,16 +7,18 @@ public class Execute implements Component<Bounds> {
 
     private NumberGuesser adaptee;
 
+    public Execute(NumberGuesser adaptee) {
+        this.adaptee = adaptee;
+    }
+
     @Override
     public void execute(Bounds newBounds) {
         if (newBounds == null) {
-            System.out.println("Number found");
+            adaptee.notifyEndGame();
             return;
         }
 
         Knowledge.getInstance().updateBounds(newBounds);
-        System.out.println("New bounds: " + newBounds);
-
-        
+        adaptee.setBounds(newBounds);
     } 
 }
